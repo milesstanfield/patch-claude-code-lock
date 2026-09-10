@@ -28,7 +28,11 @@ python3 scripts/patch.py
 
 This finds every `anthropic.claude-code-*` install under `~/.cursor/extensions` and `~/.vscode/extensions` and applies both fixes to each `extension.js`. Already-patched pieces are skipped. Before its first write to a given `extension.js`, it's backed up to `extension.js.bak` (never overwritten once it exists), and the script's output tells you where the backup is and how to restore it.
 
-After a successful patch, reload the window (`Developer: Reload Window`), close any leftover empty group once, and unlock any already-locked group once (the patch only prevents future locks/empty columns).
+After a successful patch:
+
+- Reload the window (`Developer: Reload Window`). If the new behavior doesn't seem to take effect, fully quit VS Code/Cursor (not just reload) and reopen it — a reload doesn't always pick up the patched `extension.js`.
+- Close any leftover empty group once, and unlock any already-locked group once (the patch only prevents future locks/empty columns).
+- Close any Claude Code tabs/panels left open from before the patch. New sessions reuse an already-open Claude Code panel's column if one exists, so a pre-existing tab (especially one sitting in its own locked/separate column from before) will keep new sessions landing there instead of your active group. Starting from zero open Claude Code tabs is the reliable way to see the patched behavior.
 
 ### Reverting
 
